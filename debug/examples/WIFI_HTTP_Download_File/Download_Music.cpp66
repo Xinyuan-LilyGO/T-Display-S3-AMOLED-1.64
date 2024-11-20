@@ -1,0 +1,101 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+// 替换为你的WiFi网络名称和密码
+const char *ssid = "xinyuandianzi";
+const char *password = "AA15994823428";
+
+// 音乐文件的URL
+const char *musicUrl = "https://dldir1.qq.com/qqfile/qq/PCQQ9.7.17/QQ9.7.17.29225.exe";
+
+void setup()
+{
+    Serial.begin(115200);
+
+    // 连接到WiFi
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(1000);
+        Serial.println("Connecting to WiFi..");
+    }
+
+    Serial.println("Connected to the WiFi network");
+
+    // 初始化HTTP客户端
+    HTTPClient http;
+    http.begin(musicUrl);
+
+    // 发起GET请求
+    int httpCode = http.GET();
+    if (httpCode == HTTP_CODE_MOVED_PERMANENTLY || httpCode == HTTP_CODE_FOUND)
+    {
+        // 获取重定向的URL
+        String newUrl = http.header("Location");
+        http.end(); // 关闭旧的HTTP连接
+
+        // 使用新的URL重新发起GET请求
+        http.begin(newUrl);
+        httpCode = http.GET();
+    }
+
+    if (httpCode == HTTP_CODE_OK)
+    {
+        // 获取文件大小
+        int totalSize = http.getSize();
+        float totalSizeMB = totalSize / 1024.0 / 1024.0;
+        Serial.print("Total file size: ");
+        Serial.print(totalSizeMB);
+        Serial.println(" MB");
+
+        unsigned long startTime = millis();
+        unsigned long lastTime = startTime;
+        int downloadedSize = 0;
+
+        // 读取HTTP响应
+        WiFiClient *stream = http.getStreamPtr();
+        while (http.connected() && stream->available())
+        {
+            int size = stream->read(); // 读取一个字节
+            downloadedSize++;
+
+            // 每秒钟打印一次下载速度
+            if (millis() - lastTime >= 1000)
+            {
+                float currentTime = (millis() - startTime) / 1000.0;
+                float downloadSpeed = (downloadedSize / 1024.0) / currentTime;
+                Serial.print("Downloaded: ");
+                Serial.print(downloadedSize / 1024.0);
+                Serial.print(" KB (");
+                Serial.print((downloadedSize / (float)totalSize) * 100);
+                Serial.print(" %) at ");
+                Serial.print(downloadSpeed);
+                Serial.println(" KB/s");
+
+                lastTime = millis();
+            }
+        }
+        unsigned long endTime = millis();
+
+        // 计算下载时间（秒）
+        float downloadTime = (endTime - startTime) / 1000.0;
+        Serial.print("Total download time: ");
+        Serial.print(downloadTime);
+        Serial.println(" seconds");
+
+        http.end();
+    }
+    else
+    {
+        Serial.println("HTTP request failed");
+    }
+
+    // 断开WiFi连接
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+}
+
+void loop()
+{
+    // 这里不执行任何操作
+}

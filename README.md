@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-20 10:30:27
+ * @LastEditTime: 2024-11-20 10:47:22
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-Display-AMOLED-1.64</h1>
@@ -110,7 +110,7 @@ The T-Display-AMOLED-1.64 is a development board featuring a high-definition AMO
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.0.bin) | Original |  |
+| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | Modification: Change the WIFI connection section to a 30 second timeout connection and add download speed measurement |  |
 | [Light_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
 | [Deep_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
 

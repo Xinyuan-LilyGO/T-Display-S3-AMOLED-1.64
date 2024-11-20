@@ -1,0 +1,131 @@
+/*
+ * @Description: None
+ * @version: V1.0.0
+ * @Author: None
+ * @Date: 2024-06-08 16:18:12
+ * @LastEditors: LILYGO_L
+ * @LastEditTime: 2024-06-08 17:13:26
+ * @License: GPL 3.0
+ */
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <FS.h>
+#include <SPIFFS.h>
+
+// 替换以下信息为你的Wi-Fi网络信息
+const char *ssid = "xinyuandianzi";
+const char *password = "AA15994823428";
+
+// 歌曲下载链接
+// const char *songDownloadUrl = "https://code.visualstudio.com/docs/?dv=win64user";//vscode
+// const char *songDownloadUrl = "https://dldir1.qq.com/qqfile/qq/PCQQ9.7.17/QQ9.7.17.29225.exe";//腾讯CDN加速
+const char *songDownloadUrl = "https://speed.cloudflare.com/__down?during=download&bytes=104857600"; // 全球100m
+
+// 下载后的歌曲保存路径
+const char *savePath = "/song.mp3";
+
+void setup()
+{
+    Serial.begin(115200);
+
+    // 尝试挂载SPIFFS
+    if (!SPIFFS.begin())
+    {
+        Serial.println("Failed to mount SPIFFS, attempting to format...");
+        // 格式化SPIFFS
+        if (!SPIFFS.format())
+        {
+            Serial.println("An Error has occurred while formatting SPIFFS");
+            return;
+        }
+        // 重新挂载SPIFFS
+        if (!SPIFFS.begin())
+        {
+            Serial.println("Failed to mount SPIFFS after formatting");
+            return;
+        }
+        Serial.println("SPIFFS mounted successfully after formatting");
+    }
+
+    // 连接到Wi-Fi
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(1000);
+        Serial.println("Connecting to WiFi...");
+    }
+    Serial.println("Connected to WiFi");
+
+    // 初始化HTTP客户端
+    HTTPClient http;
+    http.begin(songDownloadUrl);
+
+    // 记录下载开始时间
+    unsigned long startTime = millis();
+    // 发起GET请求
+    int httpCode = http.GET();
+    // 检查请求是否成功
+    switch (httpCode)
+    {
+    case HTTP_CODE_OK:
+    { // 获取文件大小
+        int fileSize = http.getSize();
+        Serial.println("Starting song download...");
+        Serial.println("Song size: " + String(fileSize));
+        // 打开文件用于写入
+        File file = SPIFFS.open(savePath, "w");
+        if (!file)
+        {
+            Serial.println("Failed to open file for writing");
+            return;
+        }
+
+        // 读取HTTP响应并写入文件
+        WiFiClient *stream = http.getStreamPtr();
+        while (http.connected() && (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY))
+        {
+            // 获取可用数据的大小
+            size_t availableSize = stream->available();
+            if (availableSize)
+            {
+                // 读取数据并写入文件
+                uint8_t buff[1024] = {0};
+                int len = stream->readBytes(buff, min(availableSize, sizeof(buff)));
+                // file.write(buff, len);
+                fileSize -= len;
+                Serial.println("Remaining song size: " + String(fileSize));
+            }
+            delay(1);
+
+            if (fileSize == 0)
+            {
+                break;
+            }
+        }
+
+        // 关闭文件和HTTP客户端
+        file.close();
+        http.end();
+
+        // 记录下载结束时间并计算总花费时间
+        unsigned long endTime = millis();
+        unsigned long duration = endTime - startTime;
+        Serial.println("Download completed!");
+        Serial.print("Total download time: ");
+        Serial.print(duration);
+        Serial.println(" milliseconds");
+    }
+    break;
+
+    default:
+        Serial.printf("Failed to download song\n");
+        Serial.printf("Error httpCode: %d \n", httpCode);
+
+        break;
+    }
+}
+
+void loop()
+{
+    // 这里不需要执行任何操作，因为所有的工作都在setup函数中完成
+}

@@ -109,7 +109,7 @@ T-Display-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的�
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.0.bin) | 初始版本 |  |
+| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | 修改：将WIFI连接部分改成30秒超时连接，添加下载测速 |  |
 | [Light_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
 | [Deep_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
 

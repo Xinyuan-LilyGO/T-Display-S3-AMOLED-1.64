@@ -1,10 +1,8 @@
 /*
  * @Description: 出厂测试
- * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-09-06 10:58:19
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-05-28 14:16:58
+ * @LastEditTime: 2024-11-20 10:44:49
  * @License: GPL 3.0
  */
 
@@ -22,12 +20,19 @@
 // #define WIFI_SSID "LilyGo-AABB"
 // #define WIFI_PASSWORD "xinyuandianzi"
 
-#define WIFI_CONNECT_WAIT_MAX (5000)
+#define WIFI_CONNECT_WAIT_MAX (30000)
 
 #define NTP_SERVER1 "pool.ntp.org"
 #define NTP_SERVER2 "time.nist.gov"
 #define GMT_OFFSET_SEC 8 * 3600 // Time zone setting function, written as 8 * 3600 in East Eighth Zone (UTC/GMT+8:00)
 #define DAY_LIGHT_OFFSET_SEC 0  // Fill in 3600 for daylight saving time, otherwise fill in 0
+
+// 文件下载链接
+// const char *fileDownloadUrl = "https://code.visualstudio.com/docs/?dv=win64user";//vscode
+// const char *fileDownloadUrl = "https://dldir1.qq.com/qqfile/qq/PCQQ9.7.17/QQ9.7.17.29225.exe"; // 腾讯CDN加速
+// const char *fileDownloadUrl = "https://cd001.www.duba.net/duba/install/packages/ever/kinsthomeui_150_15.exe"; // 金山毒霸
+const char *fileDownloadUrl = "http://music.163.com/song/media/outer/url?id=26122999.mp3";
+// const char *fileDownloadUrl = "https://github.com/espressif/arduino-esp32/releases/download/3.0.1/esp32-3.0.1.zip";
 
 bool Wifi_Connection_Failure_Flag = false;
 
@@ -67,15 +72,16 @@ void Wifi_STA_Test(void)
     String text;
     int wifi_num = 0;
 
-    gfx->fillScreen(BLACK);
+    gfx->fillScreen(WHITE);
     gfx->setCursor(0, 0);
     gfx->setTextSize(2);
-    gfx->setTextColor(GREEN);
+    gfx->setTextColor(BLACK);
 
     Serial.println("\nScanning wifi");
     gfx->printf("Scanning wifi\n");
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
+    WiFi.setTxPower(WIFI_POWER_19_5dBm);
     delay(100);
 
     wifi_num = WiFi.scanNetworks();
@@ -107,7 +113,7 @@ void Wifi_STA_Test(void)
 
     delay(3000);
     text.clear();
-    gfx->fillScreen(BLACK);
+    gfx->fillScreen(WHITE);
     gfx->setCursor(0, 10);
 
     text = "Connecting to ";
@@ -122,16 +128,27 @@ void Wifi_STA_Test(void)
 
     uint32_t last_tick = millis();
 
+    Wifi_Connection_Failure_Flag = false;
     while (WiFi.status() != WL_CONNECTED)
     {
+        static uint8_t temp_count = 0;
         Serial.print(".");
         gfx->printf(".");
         text += ".";
         delay(100);
 
+        temp_count++;
+        if ((temp_count % 100) == 0)
+        {
+            temp_count = 0;
+            WiFi.disconnect();
+            WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+        }
+
         if (millis() - last_tick > WIFI_CONNECT_WAIT_MAX)
         {
             Wifi_Connection_Failure_Flag = true;
+            temp_count = 0;
             break;
         }
     }
@@ -148,12 +165,10 @@ void Wifi_STA_Test(void)
         Serial.println(" ms\n");
         gfx->printf(" ms\n");
 
-        gfx->setTextColor(GREEN);
         gfx->printf("\nWifi test passed!");
     }
     else
     {
-        gfx->setTextColor(RED);
         gfx->printf("\nWifi test error!\n");
     }
 }
@@ -304,6 +319,127 @@ void GFX_Print_1()
     gfx->printf("Try Again");
     gfx->setCursor(155, 315);
     gfx->printf("Next Test");
+}
+
+void WIFI_HTTP_Download_File(void)
+{
+    // 初始化HTTP客户端
+    HTTPClient http;
+    http.begin(fileDownloadUrl);
+    // 获取重定向的URL
+    const char *headerKeys[] = {"Location"};
+    http.collectHeaders(headerKeys, 1);
+
+    // 记录下载开始时间
+    size_t startTime = millis();
+    // 无用时间
+    size_t uselessTime = 0;
+
+    // 发起GET请求
+    int httpCode = http.GET();
+
+    while (httpCode == HTTP_CODE_MOVED_PERMANENTLY || httpCode == HTTP_CODE_FOUND)
+    {
+        String newUrl = http.header("Location");
+        Serial.printf("Redirecting to: %s\n", newUrl.c_str());
+        http.end(); // 关闭旧的HTTP连接
+
+        // 使用新的URL重新发起GET请求
+        http.begin(newUrl);
+        httpCode = http.GET();
+    }
+
+    if (httpCode == HTTP_CODE_OK)
+    {
+        // 获取文件大小
+        size_t fileSize = http.getSize();
+        Serial.printf("Starting file download...\n");
+        Serial.printf("file size: %f MB\n", fileSize / 1024.0 / 1024.0);
+        gfx->setCursor(0, 0);
+        gfx->printf("Starting file download...\n");
+        gfx->printf("file size: %f MB\n", fileSize / 1024.0 / 1024.0);
+
+        // 读取HTTP响应
+        WiFiClient *stream = http.getStreamPtr();
+
+        size_t temp_count_s = 0;
+        bool temp_count_flag = true;
+        size_t temp_fileSize = fileSize;
+        // uint8_t *buf_1 = (uint8_t *)heap_caps_malloc(64 * 1024, MALLOC_CAP_SPIRAM);
+        uint8_t buf_1[4096] = {0};
+        CycleTime = millis() + 3000; // 开始计时
+        while (http.connected() && (temp_fileSize > 0 || temp_fileSize == -1))
+        {
+            // 获取可用数据的大小
+            size_t availableSize = stream->available();
+            if (availableSize)
+            {
+                // temp_fileSize -= stream->read(buf_1, min(availableSize, (size_t)(64 * 1024)));
+                temp_fileSize -= stream->read(buf_1, min(availableSize, (size_t)(4096)));
+
+                if (millis() > CycleTime)
+                {
+                    size_t temp_time_1 = millis();
+                    temp_count_s += 3;
+                    Serial.printf("WIFI RSSI: (%d)\n", WiFi.RSSI());
+                    Serial.printf("Download speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / temp_count_s);
+                    Serial.printf("Remaining file size: %f MB\n\n", temp_fileSize / 1024.0 / 1024.0);
+
+                    gfx->fillRect(0, 100, 400, 68, WHITE);
+                    gfx->setCursor(0, 100);
+                    gfx->printf("WIFI RSSI: (%d)\n", WiFi.RSSI());
+                    gfx->printf("Speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / temp_count_s);
+                    gfx->printf("Size: %f MB\n\n", temp_fileSize / 1024.0 / 1024.0);
+
+                    CycleTime = millis() + 3000;
+                    size_t temp_time_2 = millis();
+
+                    uselessTime = uselessTime + (temp_time_2 - temp_time_1);
+                }
+            }
+
+            if (temp_count_s > 30)
+            {
+                temp_count_flag = false;
+                break;
+            }
+        }
+
+        // 关闭HTTP客户端
+        http.end();
+
+        // 记录下载结束时间并计算总花费时间
+        size_t endTime = millis();
+
+        if (temp_count_flag == true)
+        {
+            Serial0.printf("Download completed!\n");
+            Serial0.printf("Total download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            Serial0.printf("Average download speed: %f KB/s\n", (fileSize / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+
+            gfx->printf("Completed!\n");
+            gfx->printf("Time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            gfx->printf("Speed: %f KB/s\n", (fileSize / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+        }
+        else
+        {
+            Serial0.printf("Download incomplete!\n");
+            Serial0.printf("Download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            Serial0.printf("Average download speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+
+            gfx->printf("Incompleted!\n");
+            gfx->printf("Time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            gfx->printf("Speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+        }
+    }
+    else
+    {
+        Serial.printf("Failed to download\n");
+        Serial.printf("Error httpCode: %d \n", httpCode);
+
+        gfx->printf("Failed to download\n");
+        gfx->printf("Error httpCode: %d \n\n", httpCode);
+    }
 }
 
 void Original_Test_1()
@@ -521,6 +657,13 @@ void Original_Test_5()
 
 void Original_Test_6()
 {
+    // 关闭OTG测试
+    SY6970->IIC_Write_Device_State(SY6970->Arduino_IIC_Power::Device::POWER_DEVICE_OTG_MODE,
+                                   SY6970->Arduino_IIC_Power::Device_State::POWER_DEVICE_OFF);
+    // 开启充电
+    SY6970->IIC_Write_Device_State(SY6970->Arduino_IIC_Power::Device::POWER_DEVICE_CHARGING_MODE,
+                                   SY6970->Arduino_IIC_Power::Device_State::POWER_DEVICE_ON);
+
     gfx->fillScreen(WHITE);
     gfx->setCursor(90, 130);
     gfx->setTextSize(4);
@@ -582,15 +725,18 @@ void Original_Test_7()
 
     delay(2000);
 
+    gfx->fillScreen(WHITE);
+
     if (!Wifi_Connection_Failure_Flag)
     {
         // Obtain and set the time from the network time server
         // After successful acquisition, the chip will use the RTC clock to update the holding time
         configTime(GMT_OFFSET_SEC, DAY_LIGHT_OFFSET_SEC, NTP_SERVER1, NTP_SERVER2);
 
-        delay(3000);
+        WIFI_HTTP_Download_File();
+        // delay(3000);
 
-        PrintLocalTime();
+        // PrintLocalTime();
     }
     else
     {
@@ -598,14 +744,13 @@ void Original_Test_7()
         gfx->setTextColor(RED);
         gfx->print("Not connected to the network");
     }
-    delay(5000);
 
-    gfx->fillScreen(WHITE);
+    // gfx->fillScreen(WHITE);
 
-    gfx->setCursor(70, 160);
-    gfx->setTextSize(4);
-    gfx->setTextColor(ORANGE);
-    gfx->printf("FINISH");
+    // gfx->setCursor(70, 160);
+    // gfx->setTextSize(4);
+    // gfx->setTextColor(ORANGE);
+    // gfx->printf("FINISH");
 
     GFX_Print_1();
 }
