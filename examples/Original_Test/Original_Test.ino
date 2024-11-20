@@ -2,7 +2,7 @@
  * @Description: 出厂测试
  * @Author: LILYGO_L
  * @Date: 2023-09-06 10:58:19
- * @LastEditTime: 2024-11-20 10:44:49
+ * @LastEditTime: 2024-11-20 15:02:34
  * @License: GPL 3.0
  */
 
@@ -413,9 +413,9 @@ void WIFI_HTTP_Download_File(void)
 
         if (temp_count_flag == true)
         {
-            Serial0.printf("Download completed!\n");
-            Serial0.printf("Total download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
-            Serial0.printf("Average download speed: %f KB/s\n", (fileSize / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+            Serial.printf("Download completed!\n");
+            Serial.printf("Total download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            Serial.printf("Average download speed: %f KB/s\n", (fileSize / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
 
             gfx->printf("Completed!\n");
             gfx->printf("Time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
@@ -423,9 +423,9 @@ void WIFI_HTTP_Download_File(void)
         }
         else
         {
-            Serial0.printf("Download incomplete!\n");
-            Serial0.printf("Download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
-            Serial0.printf("Average download speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
+            Serial.printf("Download incomplete!\n");
+            Serial.printf("Download time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
+            Serial.printf("Average download speed: %f KB/s\n", ((fileSize - temp_fileSize) / 1024.0) / ((endTime - startTime - uselessTime) / 1000.0));
 
             gfx->printf("Incompleted!\n");
             gfx->printf("Time: %f s\n", (endTime - startTime - uselessTime) / 1000.0);
