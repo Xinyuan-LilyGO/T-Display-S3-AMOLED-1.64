@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-20 10:30:20
  * @License: GPL 3.0
 -->
-<h1 align = "center">T-Display-AMOLED-1.64</h1>
+<h1 align = "center">T-Display-S3-AMOLED-1.64</h1>
 
 <p align="center" width="100%">
     <img src="image/14.jpg" alt="">
@@ -16,13 +16,13 @@
 ## 版本迭代:
 | Version                               | Update date                       |
 | :-------------------------------: | :-------------------------------: |
-| T-Display-AMOLED-1.64_V1.0                      | 2024-04-08                         |
+| T-Display-S3-AMOLED-1.64_V1.0                      | 2024-04-08                         |
 
 ## 购买链接
 
 | Product                     | SOC           |  FLASH  |  PSRAM   | Link                   |
 | :------------------------: | :-----------: |:-------: | :---------: | :------------------: |
-| T-Display-AMOLED-1.64_V1.0   | ESP32S3R8 |   16M   | 8M (Octal SPI) |  [LILYGO Mall](https://lilygo.cc/products/t-display-s3-amoled-1-64?_pos=8&_sid=eacfa858d&_ss=r)  |
+| T-Display-S3-AMOLED-1.64_V1.0   | ESP32S3R8 |   16M   | 8M (Octal SPI) |  [LILYGO Mall](https://lilygo.cc/products/t-display-s3-amoled-1-64?_pos=8&_sid=eacfa858d&_ss=r)  |
 
 ## 目录
 - [描述](#描述)
@@ -38,7 +38,7 @@
 
 ## 描述
 
-T-Display-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的开发板，可连接外接电池独立供电。
+T-Display-S3-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的开发板，可连接外接电池独立供电。
 
 ## 预览
 
@@ -109,9 +109,9 @@ T-Display-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的�
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | 修改：将WIFI连接部分改成30秒超时连接，添加下载测速 |  |
-| [Light_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
-| [Deep_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
+| [Original_Test_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | 修改：将WIFI连接部分改成30秒超时连接，添加下载测速 |  |
+| [Light_Sleep_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
+| [Deep_Sleep_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | 初始版本 |  |
 
 
 ### PlatformIO
@@ -205,8 +205,8 @@ T-Display-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的�
 ### 功耗
 | Firmware | Program| Description | Picture |
 | ------  | ------  | ------ | ------ | 
-| `[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Light Sleep Wake Up` | 功耗: 2259.7uA | <p align="center" width="10%"> <img src="image/13.jpg" alt="example" width="50%"> </p> |
-| `[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Deep Sleep Wake Up` | 功耗: 254.5uA |<p align="center" width="10%"> <img src="image/12.jpg" alt="example" width="50%"> </p> |
+| `[T-Display-S3-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Light Sleep Wake Up` | 功耗: 2259.7uA | <p align="center" width="10%"> <img src="image/13.jpg" alt="example" width="50%"> </p> |
+| `[T-Display-S3-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Deep Sleep Wake Up` | 功耗: 254.5uA |<p align="center" width="10%"> <img src="image/12.jpg" alt="example" width="50%"> </p> |
 
 ## 常见问题
 
@@ -229,7 +229,7 @@ T-Display-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕的�
 * A. 请按住“BOOT-0”按键重新下载程序。
 
 ## 项目
-* [T-Display-AMOLED-1.64_V1.0](./project/T-Display-AMOLED-1.64_V1.0.pdf)
+* [T-Display-S3-AMOLED-1.64_V1.0](./project/T-Display-S3-AMOLED-1.64_V1.0.pdf)
 
 ## 资料
 * [CO5300](./information/CO5300_V0.01.pdf)

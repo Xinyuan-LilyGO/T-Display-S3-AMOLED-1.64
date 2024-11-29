@@ -4,10 +4,10 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-20 10:47:22
+ * @LastEditTime: 2024-11-29 13:45:55
  * @License: GPL 3.0
 -->
-<h1 align = "center">T-Display-AMOLED-1.64</h1>
+<h1 align = "center">T-Display-S3-AMOLED-1.64</h1>
 
 <p align="center" width="100%">
     <img src="image/14.jpg" alt="">
@@ -18,13 +18,13 @@
 ## Version iteration:
 | Version                              | Update date                       |
 | :-------------------------------: | :-------------------------------: |
-| T-Display-AMOLED-1.64_V1.0                      | 2024-04-08                         |
+| T-Display-S3-AMOLED-1.64_V1.0                      | 2024-04-08                         |
 
 ## PurchaseLink
 
 | Product                     | SOC           |  FLASH  |  PSRAM   | Link                   |
 | :------------------------: | :-----------: |:-------: | :---------: | :------------------: |
-| T-Display-AMOLED-1.64_V1.0   | ESP32S3R8 |   16M   | 8M (Octal SPI) | [LILYGO Mall](https://lilygo.cc/products/t-display-s3-amoled-1-64?_pos=8&_sid=eacfa858d&_ss=r)  |
+| T-Display-S3-AMOLED-1.64_V1.0   | ESP32S3R8 |   16M   | 8M (Octal SPI) | [LILYGO Mall](https://lilygo.cc/products/t-display-s3-amoled-1-64?_pos=8&_sid=eacfa858d&_ss=r)  |
 
 ## Directory
 - [Describe](#describe)
@@ -40,7 +40,7 @@
 
 ## Describe
 
-The T-Display-AMOLED-1.64 is a development board featuring a high-definition AMOLED screen onboard, developed based on the ESP32S3. It is capable of connecting to an external battery for independent power supply.
+The T-Display-S3-AMOLED-1.64 is a development board featuring a high-definition AMOLED screen onboard, developed based on the ESP32S3. It is capable of connecting to an external battery for independent power supply.
 
 ## Preview
 
@@ -110,9 +110,9 @@ The T-Display-AMOLED-1.64 is a development board featuring a high-definition AMO
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Original_Test_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | Modification: Change the WIFI connection section to a 30 second timeout connection and add download speed measurement |  |
-| [Light_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
-| [Deep_Sleep_V1.0.0](./firmware/[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
+| [Original_Test_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Original_Test]_firmware_V1.0.1.bin) | Modification: Change the WIFI connection section to a 30 second timeout connection and add download speed measurement |  |
+| [Light_Sleep_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
+| [Deep_Sleep_V1.0.0](./firmware/[T-Display-S3-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin) | Original |  |
 
 ### PlatformIO
 1. Install[VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
@@ -205,8 +205,8 @@ The T-Display-AMOLED-1.64 is a development board featuring a high-definition AMO
 ### Power Dissipation
 | Firmware | Program| Description | Picture |
 | ------  | ------  | ------ | ------ | 
-| `[T-Display-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Light Sleep Wake Up` | Power dissipation: 2259.7uA | <p align="center" width="10%"> <img src="image/13.jpg" alt="example" width="50%"> </p> |
-| `[T-Display-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Deep Sleep Wake Up` | Power dissipation: 254.5uA |<p align="center" width="10%"> <img src="image/12.jpg" alt="example" width="50%"> </p> |
+| `[T-Display-S3-AMOLED-1.64_V1.0][Light_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Light Sleep Wake Up` | Power dissipation: 2259.7uA | <p align="center" width="10%"> <img src="image/13.jpg" alt="example" width="50%"> </p> |
+| `[T-Display-S3-AMOLED-1.64_V1.0][Deep_Sleep_Wake_Up]_firmware_V1.0.0.bin` | `Deep Sleep Wake Up` | Power dissipation: 254.5uA |<p align="center" width="10%"> <img src="image/12.jpg" alt="example" width="50%"> </p> |
 
 ## FAQ
 
@@ -229,7 +229,7 @@ The T-Display-AMOLED-1.64 is a development board featuring a high-definition AMO
 * A. Please hold down the "BOOT-0" button and try downloading the program again.
 
 ## Project
-* [T-Display-AMOLED-1.64_V1.0](./project/T-Display-AMOLED-1.64_V1.0.pdf)
+* [T-Display-S3-AMOLED-1.64_V1.0](./project/T-Display-S3-AMOLED-1.64_V1.0.pdf)
 
 ## Information
 * [CO5300](./information/CO5300_V0.01.pdf)
