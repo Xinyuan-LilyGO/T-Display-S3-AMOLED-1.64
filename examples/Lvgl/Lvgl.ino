@@ -2,7 +2,7 @@
  * @Description: Lvgl Template
  * @Author: LILYGO_L
  * @Date: 2024-09-05 09:07:21
- * @LastEditTime: 2024-09-05 09:07:21
+ * @LastEditTime: 2025-01-02 16:38:22
  * @License: GPL 3.0
  */
 #include "custom.h"
