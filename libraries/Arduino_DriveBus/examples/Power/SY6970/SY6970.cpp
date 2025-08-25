@@ -25,19 +25,18 @@
  * @Author: LILYGO_L
  * @Date: 2023-11-17 13:34:38
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-27 17:33:55
+ * @LastEditTime: 2024-02-28 14:19:22
  * @License: GPL 3.0
  */
 #include "Arduino_DriveBus_Library.h"
-#include "pin_config.h"
+
+static bool Temp1 = 0;
 
 std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
     std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
 
 std::unique_ptr<Arduino_IIC> SY6970(new Arduino_SY6970(IIC_Bus, SY6970_DEVICE_ADDRESS,
                                                        DRIVEBUS_DEFAULT_VALUE, DRIVEBUS_DEFAULT_VALUE));
-
-static bool Temp1 = 0;
 
 void setup()
 {
@@ -88,7 +87,7 @@ void loop()
     Serial.printf("System running time: %d\n\n", (uint32_t)millis() / 1000);
     Serial.printf("IIC_Bus.use_count(): %d\n\n", (int32_t)IIC_Bus.use_count());
 
-    Serial.printf("IIC device ID: %#X \n", (int32_t)SY6970->IIC_Read_Device_ID());
+    Serial.printf("IIC device ID: %#X \n", (int32_t)SY6970->IIC_Device_ID());
 
     Serial.printf("\nBUS Status: %s \n",
                   (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_BUS_STATUS)).c_str());

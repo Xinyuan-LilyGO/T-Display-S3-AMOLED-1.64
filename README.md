@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-29 13:45:55
+ * @LastEditTime: 2025-08-25 15:36:21
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-Display-S3-AMOLED-1.64</h1>
@@ -240,5 +240,5 @@ The T-Display-S3-AMOLED-1.64 is a development board featuring a high-definition 
 
 ## DependentLibraries
 * [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-* [Arduino_DriveBus-1.1.8](https://github.com/Xk-w/Arduino_DriveBus)
+* [Arduino_DriveBus-1.1.16]()
 

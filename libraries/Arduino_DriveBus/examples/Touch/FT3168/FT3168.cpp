@@ -15,15 +15,14 @@
  *    2. The Arduino_DriveBus library uses enumerations to register commands and values for chip operations.
  *  The specific executable commands are explained in the chip file under @Description.
  *
- * @version: V1.0.0
+ * @version: V1.1.8
  * @Author: LILYGO_L
  * @Date: 2023-08-25 17:09:20
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-01-23 11:04:15
+ * @LastEditTime: 2024-03-12 09:24:48
  * @License: GPL 3.0
  */
 #include "Arduino_DriveBus_Library.h"
-#include "pin_config.h"
 
 static size_t CycleTime = 0;
 
@@ -44,9 +43,6 @@ void setup()
 {
     Serial.begin(115200);
     Serial.println("Ciallo");
-
-    pinMode(LCD_EN, OUTPUT);
-    digitalWrite(LCD_EN, HIGH);
 
     while (FT3168->begin() == false)
     {
@@ -83,7 +79,7 @@ void setup()
     // FT3168->IIC_Write_Device_Value(FT3168->Arduino_IIC_Touch::Device_Value::TOUCH_AUTOMATICALLY_MONITOR_TIME,
     //                                10);
 
-    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Read_Device_ID());
+    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Device_ID());
     delay(1000);
 }
 
@@ -95,7 +91,7 @@ void loop()
     {
         FT3168->IIC_Interrupt_Flag = false;
 
-        Serial.printf("ID: %#X \n", (int32_t)FT3168->IIC_Read_Device_ID());
+        Serial.printf("ID: %#X \n", (int32_t)FT3168->IIC_Device_ID());
 
         Serial.printf("\nGesture:%s\n",
                       (FT3168->IIC_Read_Device_State(FT3168->Arduino_IIC_Touch::Status_Information::TOUCH_GESTURE_ID)).c_str());

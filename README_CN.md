@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-20 10:30:20
+ * @LastEditTime: 2025-08-25 15:36:05
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-Display-S3-AMOLED-1.64</h1>
@@ -240,4 +240,4 @@ T-Display-S3-AMOLED-1.64是一款基于ESP32S3开发的板载高清AMOLED屏幕�
 
 ## 依赖库
 * [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-* [Arduino_DriveBus-1.1.8](https://github.com/Xk-w/Arduino_DriveBus)
+* [Arduino_DriveBus-1.1.16]()

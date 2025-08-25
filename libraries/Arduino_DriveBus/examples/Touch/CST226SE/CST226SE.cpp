@@ -21,11 +21,10 @@
  * @Author: LILYGO_L
  * @Date: 2023-08-25 17:09:20
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-28 10:34:14
+ * @LastEditTime: 2024-02-28 14:19:22
  * @License: GPL 3.0
  */
 #include "Arduino_DriveBus_Library.h"
-#include "pin_config.h"
 
 static size_t CycleTime = 0;
 
@@ -62,7 +61,7 @@ void setup()
     // CST226SE->IIC_Write_Device_State(CST226SE->Arduino_IIC_Touch::Device::TOUCH_DEVICE_SLEEP_MODE,
     //                                 CST226SE->Arduino_IIC_Touch::Device_State::TOUCH_DEVICE_ON);
 
-    Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Read_Device_ID());
+    Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Device_ID());
     delay(1000);
 }
 
@@ -74,40 +73,40 @@ void loop()
     {
         CST226SE->IIC_Interrupt_Flag = false;
 
-        Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Read_Device_ID());
+        Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Device_ID());
 
         Serial.printf("Fingers Number:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_FINGER_NUMBER));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_FINGER_NUMBER));
         Serial.printf("Touch X:%d Y:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y));
 
         Serial.printf("\nTouch X1:%d Y1:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_COORDINATE_Y));
         Serial.printf("Touch X2:%d Y2:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_COORDINATE_Y));
         Serial.printf("Touch X3:%d Y3:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_COORDINATE_Y));
         Serial.printf("Touch X4:%d Y4:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_COORDINATE_Y));
         Serial.printf("Touch X5:%d Y5:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_COORDINATE_X),
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_COORDINATE_Y));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_COORDINATE_X),
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_COORDINATE_Y));
 
         Serial.printf("\nTouch1 Pressure Value:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_PRESSURE_VALUE));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH1_PRESSURE_VALUE));
         Serial.printf("Touch2 Pressure Value:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_PRESSURE_VALUE));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH2_PRESSURE_VALUE));
         Serial.printf("Touch3 Pressure Value:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_PRESSURE_VALUE));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH3_PRESSURE_VALUE));
         Serial.printf("Touch4 Pressure Value:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_PRESSURE_VALUE));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH4_PRESSURE_VALUE));
         Serial.printf("Touch5 Pressure Value:%d\n",
-                      CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_PRESSURE_VALUE));
+                      (int32_t)CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH5_PRESSURE_VALUE));
     }
 
     delay(500);
