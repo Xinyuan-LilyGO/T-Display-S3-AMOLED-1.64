@@ -3,8 +3,8 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-09-06 10:58:19
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-05-28 14:16:23
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-11-14 14:37:28
  * @License: GPL 3.0
  */
 #include <Arduino.h>
@@ -64,7 +64,7 @@ void setup()
     gfx->setTextSize(2);
     gfx->printf("Ciallo");
 
-    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Read_Device_ID());
+    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Device_ID());
     delay(1000);
 }
 

@@ -2,7 +2,7 @@
  * @Description: 出厂测试
  * @Author: LILYGO_L
  * @Date: 2023-09-06 10:58:19
- * @LastEditTime: 2024-11-20 15:02:34
+ * @LastEditTime: 2025-09-26 14:26:21
  * @License: GPL 3.0
  */
 
@@ -202,7 +202,7 @@ void GFX_Print_Touch_Info_Loop(int32_t touch_x, int32_t touch_y, int32_t fingers
     gfx->setTextColor(BLACK);
 
     gfx->setCursor(30, 50);
-    gfx->printf("ID: %#X ", (int32_t)FT3168->IIC_Read_Device_ID());
+    gfx->printf("ID: %#X ", (int32_t)FT3168->IIC_Device_ID());
 
     gfx->setCursor(30, 70);
     gfx->printf("Fingers Number:%d ", fingers_number);
@@ -1067,7 +1067,7 @@ void setup()
     {
         Serial.println("FT3168 initialization successfully");
     }
-    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Read_Device_ID());
+    Serial.printf("ID: %#X \n\n", (int32_t)FT3168->IIC_Device_ID());
 
     gfx->begin();
     gfx->fillScreen(BLACK);

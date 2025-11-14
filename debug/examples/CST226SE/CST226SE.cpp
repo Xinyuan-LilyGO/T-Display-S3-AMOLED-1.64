@@ -62,7 +62,7 @@ void setup()
     // CST226SE->IIC_Write_Device_State(CST226SE->Arduino_IIC_Touch::Device::TOUCH_DEVICE_SLEEP_MODE,
     //                                 CST226SE->Arduino_IIC_Touch::Device_State::TOUCH_DEVICE_ON);
 
-    Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Read_Device_ID());
+    Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Device_ID());
     delay(1000);
 }
 
@@ -74,7 +74,7 @@ void loop()
     {
         CST226SE->IIC_Interrupt_Flag = false;
 
-        Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Read_Device_ID());
+        Serial.printf("ID: %#X \n\n", (int32_t)CST226SE->IIC_Device_ID());
 
         Serial.printf("Fingers Number:%d\n",
                       CST226SE->IIC_Read_Device_Value(CST226SE->Arduino_IIC_Touch::Value_Information::TOUCH_FINGER_NUMBER));
